@@ -4,6 +4,27 @@ export function checkEveryParamExistence(...params) {
     (param) => param !== null && param !== undefined && param !== ""
   );
 }
+
 export function checkAtLeastOneParamExist(...params) {
   return params.some((param) => param !== null && param !== undefined);
+}
+
+export function filterOnlyExistingParams(ojbParams, currentUser) {
+  let copyObject = {};
+  for (let prop in ojbParams) {
+    if (
+      ojbParams[prop] !== null &&
+      ojbParams[prop] !== undefined &&
+      ojbParams[prop] !== ""
+    ) {
+      copyObject[prop] = ojbParams[prop];
+    }
+  }
+
+  //we only over write existing values or keep them as them was
+  return { ...currentUser, ...copyObject };
+}
+
+export function emailToLowerCased(email) {
+  return email.toLowerCase();
 }

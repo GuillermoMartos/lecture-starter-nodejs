@@ -2,6 +2,10 @@ import { userRepository } from "../repositories/userRepository.js";
 import { UserEntity } from "../types/BaseEntity.js";
 import { CustomError } from "../types/CustomError.js";
 import { MESSAGES } from "../constants/response.messages.js";
+import {
+  emailToLowerCased,
+  filterOnlyExistingParams,
+} from "../middlewares/middlewares.helper.js";
 
 class UserService {
   // TODO: Implement methods to work with user
@@ -46,16 +50,12 @@ class UserService {
     }
   }
 
-  checkUniqueData(email, phone) {
-    this.isUniqueEmail(email);
-    this.isUniquePhone(phone);
-  }
-
   checkAllData(data) {
     this.isPasswordFormat(data.password);
     this.isEmailFormat(data.email);
     this.isPhoneFormat(data.phoneNumber);
-    this.checkUniqueData(data.email, data.phoneNumber);
+    this.isUniqueEmail(data.email);
+    this.isUniquePhone(data.phone);
     return data;
   }
 
@@ -95,28 +95,37 @@ class UserService {
     return item;
   }
 
-  updateUser(data) {
-    let checkedData;
+  updateUser(id, data) {
+    let { email, phoneNumber, password, firstName, lastName } = data;
     try {
-      checkedData = this.checkAllData(data);
+      if (email) {
+        email = emailToLowerCased(email);
+        userService.isEmailFormat(email);
+        userService.isUniqueEmail(email);
+      }
+      if (phoneNumber) {
+        userService.isPhoneFormat(phoneNumber);
+        userService.isUniquePhone(phoneNumber);
+      }
+      if (password) {
+        userService.isPasswordFormat(password);
+      }
+      const currentUser = userService.search({ id });
+      const filteredParams = filterOnlyExistingParams(
+        {
+          firstName,
+          lastName,
+          email,
+          phoneNumber,
+          password,
+        },
+        currentUser
+      );
+      const updatedUSer = userRepository.update(id, { ...filteredParams });
+      return updatedUSer;
     } catch (error) {
       //handled by response middleware
       throw error;
-    }
-
-    try {
-      const newUser = new UserEntity(userRepository.create(checkedData));
-      return newUser.returnUnidentified();
-    } catch (error) {
-      //search and then delete the posible previous created because of unexpected error!
-      const rollbackCreated = this.search({ phoneNumber: data.phoneNumber });
-      if (rollbackCreated) {
-        userRepository.delete(rollbackCreated.id);
-      }
-      throw new CustomError(
-        MESSAGES.USER_MESSAGES.UNEXPECTED_ERROR_CREATING,
-        500
-      );
     }
   }
 }

@@ -13,6 +13,8 @@ export const MESSAGES = {
     ERROR_AUTH_VALIDATION_MIDDLEWARE:
       "Missing body parameters. Required: email, password",
     ERROR_USER_DELETE_NOT_FOUND: "User id not found. No deletion performed.",
+    ERROR_USER_UPDATE_EMPTY_PARAMS:
+      "Required: firstName or lastName or email or phoneNumber or password.",
   },
   FIGHTER_MESSAGES: {
     ERROR_FIGHTER_DELETE_NOT_FOUND:
@@ -21,7 +23,7 @@ export const MESSAGES = {
       "Unexpected error creating fighter. Please, contact or try again",
   },
   GENERIC_ERROR_MESSAGE: "Unexpected error. Please, contact or try again",
-  GENERIC_EMPTY_REQUEST_ERROR: "Requested data is not found",
+  GENERIC_EMPTY_REQUEST_ERROR: "Requested data is not found.",
   ERROR_SECURITY_TOKEN_OR_ID_MISSING: "Token or User id missing",
   ERROR_SECURITY_TOKEN_BAD_CREDENTIAL: "Invalid token",
 };

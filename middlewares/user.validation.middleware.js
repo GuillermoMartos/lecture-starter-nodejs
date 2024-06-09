@@ -3,19 +3,16 @@ import { CustomError } from "../types/CustomError.js";
 import {
   checkAtLeastOneParamExist,
   checkEveryParamExistence,
+  emailToLowerCased,
 } from "./middlewares.helper.js";
-/* 
-When creating a user — all fields are required, except for id
-When creating a fighter — all fields are required, except for id and health
-When updating a user or a fighter — at least one field from the model must be present
- */
 
 const createUserValid = (req, res, next) => {
   // TODO: Implement validatior for USER entity during creation
-  const { firstName, lastName, email, phoneNumber, password } = req.body;
+  let { firstName, lastName, email, phoneNumber, password } = req.body;
   if (
     checkEveryParamExistence(firstName, lastName, email, phoneNumber, password)
   ) {
+    req.body.email = emailToLowerCased(req.body.email);
     return next();
   }
   const paramsEroor = new CustomError(
@@ -27,17 +24,18 @@ const createUserValid = (req, res, next) => {
 
 const updateUserValid = (req, res, next) => {
   // TODO: Implement validatior for user entity during update
-  const { firstName, lastName, email, phoneNumber, password } = req.body;
+  let { firstName, lastName, email, phoneNumber, password } = req.body;
   if (
     checkAtLeastOneParamExist(firstName, lastName, email, phoneNumber, password)
   ) {
     return next();
+  } else {
+    const requestedDataError = new CustomError(
+      `${MESSAGES.GENERIC_EMPTY_REQUEST_ERROR} ${MESSAGES.USER_MESSAGES.ERROR_USER_UPDATE_EMPTY_PARAMS}`,
+      404
+    );
+    return next(requestedDataError);
   }
-  const requestedDataError = new CustomError(
-    MESSAGES.GENERIC_EMPTY_REQUEST_ERROR,
-    404
-  );
-  return next(requestedDataError);
 };
 
 export { createUserValid, updateUserValid };

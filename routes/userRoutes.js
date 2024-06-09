@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { userService } from "../services/userService.js";
-import { createUserValid } from "../middlewares/user.validation.middleware.js";
+import {
+  createUserValid,
+  updateUserValid,
+} from "../middlewares/user.validation.middleware.js";
 import { tokenValidation } from "../middlewares/auth.tokenValidation.middleware.js";
 
 const router = Router();
@@ -35,5 +38,21 @@ router.delete("/:id", tokenValidation, async (req, res, next) => {
     return next(error);
   }
 });
+
+router.patch(
+  "/:id",
+  tokenValidation,
+  updateUserValid,
+  async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const updatedUser = userService.updateUser(id, req.body);
+      res.body = updatedUser;
+      return next(res);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
 
 export { router };
