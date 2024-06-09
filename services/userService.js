@@ -84,6 +84,17 @@ class UserService {
     }
   }
 
+  deleteUserById(id) {
+    const item = userRepository.delete(id);
+    if (item.length === 0) {
+      throw new CustomError(
+        MESSAGES.USER_MESSAGES.ERROR_USER_DELETE_NOT_FOUND,
+        404
+      );
+    }
+    return item;
+  }
+
   updateUser(data) {
     let checkedData;
     try {

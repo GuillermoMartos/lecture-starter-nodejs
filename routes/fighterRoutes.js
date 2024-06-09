@@ -43,4 +43,15 @@ router.post(
   }
 );
 
+router.delete("/:id", tokenValidation, async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const deletedFighter = fighterService.deleteFighterById(id);
+    res.body = deletedFighter;
+    return next(res);
+  } catch (error) {
+    return next(error);
+  }
+});
+
 export { router };

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { userService } from "../services/userService.js";
 import { createUserValid } from "../middlewares/user.validation.middleware.js";
+import { tokenValidation } from "../middlewares/auth.tokenValidation.middleware.js";
 
 const router = Router();
 
@@ -19,6 +20,17 @@ router.post("/", createUserValid, async (req, res, next) => {
     });
     res.body = unidentifiedUserResponse;
     return next(req.body);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.delete("/:id", tokenValidation, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedUser = userService.deleteUserById(id);
+    res.body = deletedUser;
+    return next(res);
   } catch (error) {
     return next(error);
   }

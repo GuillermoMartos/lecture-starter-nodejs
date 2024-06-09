@@ -12,6 +12,13 @@ export const MESSAGES = {
       "Missing body parameters. Required: firstName, lastName, email, phoneNumber, password",
     ERROR_AUTH_VALIDATION_MIDDLEWARE:
       "Missing body parameters. Required: email, password",
+    ERROR_USER_DELETE_NOT_FOUND: "User id not found. No deletion performed.",
+  },
+  FIGHTER_MESSAGES: {
+    ERROR_FIGHTER_DELETE_NOT_FOUND:
+      "Fighter id not found. No deletion performed.",
+    UNEXPECTED_FIGHTER_CREATING:
+      "Unexpected error creating fighter. Please, contact or try again",
   },
   GENERIC_ERROR_MESSAGE: "Unexpected error. Please, contact or try again",
   GENERIC_EMPTY_REQUEST_ERROR: "Requested data is not found",
