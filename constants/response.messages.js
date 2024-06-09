@@ -15,4 +15,6 @@ export const MESSAGES = {
   },
   GENERIC_ERROR_MESSAGE: "Unexpected error. Please, contact or try again",
   GENERIC_EMPTY_REQUEST_ERROR: "Requested data is not found",
+  ERROR_SECURITY_TOKEN_OR_ID_MISSING: "Token or User id missing",
+  ERROR_SECURITY_TOKEN_BAD_CREDENTIAL: "Invalid token",
 };

@@ -4,7 +4,7 @@ class BaseEntity {
   }
 
   returnUnidentified() {
-    const { id, password, ...rest } = this;
+    const { password, ...rest } = this;
     return rest;
   }
 }
