@@ -134,7 +134,7 @@ class FighterService {
   }
 
   updateFighter(id, data) {
-    const { name, power, defense, health } = data;
+    let { name, power, defense, health } = data;
     try {
       const currentFighter = this.searchById({ id });
       if (!currentFighter) {
@@ -144,6 +144,7 @@ class FighterService {
         );
       }
       if (name) {
+        name = normalizeName(name);
         this.isNameUnique(name);
       }
       if (power) {

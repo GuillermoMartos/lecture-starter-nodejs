@@ -55,7 +55,7 @@ class UserService {
     this.isEmailFormat(data.email);
     this.isPhoneFormat(data.phoneNumber);
     this.isUniqueEmail(data.email);
-    this.isUniquePhone(data.phone);
+    this.isUniquePhone(data.phoneNumber);
     return data;
   }
 
@@ -124,8 +124,9 @@ class UserService {
         },
         currentUser
       );
-      const updatedUser = userRepository.update(id, { ...filteredParams });
-      return updatedUser;
+      const updatedDBUser = userRepository.update(id, { ...filteredParams });
+      const updatedUser = new UserEntity(updatedDBUser);
+      return updatedUser.returnUnidentified();
     } catch (error) {
       //handled by response middleware
       throw error;
