@@ -5,7 +5,6 @@ import { authCredentialsValidate } from "../middlewares/auth.validation.middlewa
 const router = Router();
 
 router.post("/login", authCredentialsValidate, (req, res, next) => {
-  let userLogged;
   try {
     // TODO: Implement login action (get the user if it exist with entered credentials)
     const { email, password } = req.body;
@@ -15,6 +14,7 @@ router.post("/login", authCredentialsValidate, (req, res, next) => {
     res.body = user;
     next(res);
   } catch (error) {
+    //handled by response middleware
     throw error;
   }
 });

@@ -5,7 +5,7 @@ import { MESSAGES } from "../constants/response.messages.js";
 import {
   emailToLowerCased,
   filterOnlyExistingParams,
-} from "../middlewares/middlewares.helper.js";
+} from "../helpers/middlewares.helper.js";
 
 class UserService {
   // TODO: Implement methods to work with user
@@ -87,10 +87,7 @@ class UserService {
   deleteUserById(id) {
     const item = userRepository.delete(id);
     if (item.length === 0) {
-      throw new CustomError(
-        MESSAGES.USER_MESSAGES.ERROR_USER_DELETE_NOT_FOUND,
-        404
-      );
+      throw new CustomError(MESSAGES.USER_MESSAGES.ERROR_USER_NOT_FOUND, 404);
     }
     return item;
   }
@@ -100,17 +97,23 @@ class UserService {
     try {
       if (email) {
         email = emailToLowerCased(email);
-        userService.isEmailFormat(email);
-        userService.isUniqueEmail(email);
+        this.isEmailFormat(email);
+        this.isUniqueEmail(email);
       }
       if (phoneNumber) {
-        userService.isPhoneFormat(phoneNumber);
-        userService.isUniquePhone(phoneNumber);
+        this.isPhoneFormat(phoneNumber);
+        this.isUniquePhone(phoneNumber);
       }
       if (password) {
-        userService.isPasswordFormat(password);
+        this.isPasswordFormat(password);
       }
-      const currentUser = userService.search({ id });
+      const currentUser = this.search({ id });
+      if (!currentUser) {
+        throw new CustomError(
+          MESSAGES.FIGHTER_MESSAGES.ERROR_FIGHTER_NOT_FOUND,
+          404
+        );
+      }
       const filteredParams = filterOnlyExistingParams(
         {
           firstName,
@@ -121,12 +124,24 @@ class UserService {
         },
         currentUser
       );
-      const updatedUSer = userRepository.update(id, { ...filteredParams });
-      return updatedUSer;
+      const updatedUser = userRepository.update(id, { ...filteredParams });
+      return updatedUser;
     } catch (error) {
       //handled by response middleware
       throw error;
     }
+  }
+
+  searchById(id) {
+    const item = userRepository.getOne(id);
+    if (!item) {
+      throw new CustomError(MESSAGES.USER_MESSAGES.ERROR_USER_NOT_FOUND, 404);
+    }
+    return item;
+  }
+
+  getAllUsers() {
+    return userRepository.getAll();
   }
 }
 

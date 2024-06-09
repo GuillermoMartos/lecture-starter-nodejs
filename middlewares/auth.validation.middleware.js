@@ -1,6 +1,6 @@
 import { MESSAGES } from "../constants/response.messages.js";
 import { CustomError } from "../types/CustomError.js";
-import { checkEveryParamExistence } from "./middlewares.helper.js";
+import { checkEveryParamExistence } from "../helpers/middlewares.helper.js";
 
 export const authCredentialsValidate = (req, res, next) => {
   // TODO: Implement validatior for USER entity during creation

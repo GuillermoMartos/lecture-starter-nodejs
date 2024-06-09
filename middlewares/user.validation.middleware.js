@@ -4,7 +4,7 @@ import {
   checkAtLeastOneParamExist,
   checkEveryParamExistence,
   emailToLowerCased,
-} from "./middlewares.helper.js";
+} from "../helpers/middlewares.helper.js";
 
 const createUserValid = (req, res, next) => {
   // TODO: Implement validatior for USER entity during creation
@@ -32,7 +32,7 @@ const updateUserValid = (req, res, next) => {
   } else {
     const requestedDataError = new CustomError(
       `${MESSAGES.GENERIC_EMPTY_REQUEST_ERROR} ${MESSAGES.USER_MESSAGES.ERROR_USER_UPDATE_EMPTY_PARAMS}`,
-      404
+      400
     );
     return next(requestedDataError);
   }

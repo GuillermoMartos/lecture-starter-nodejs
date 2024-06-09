@@ -10,6 +10,19 @@ const router = Router();
 
 // TODO: Implement route controllers for user
 
+router.get("/", async (req, res, next) => {
+  const storedUsers = userService.getAllUsers();
+  res.body = storedUsers;
+  return next(res);
+});
+
+router.get("/:id", tokenValidation, async (req, res, next) => {
+  const id = req.params.id;
+  const requestedUser = userService.searchById({ id });
+  res.body = requestedUser;
+  return next(res);
+});
+
 router.post("/", createUserValid, async (req, res, next) => {
   const { firstName, lastName, email, phoneNumber, password } = req.body;
   try {

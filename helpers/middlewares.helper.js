@@ -9,7 +9,7 @@ export function checkAtLeastOneParamExist(...params) {
   return params.some((param) => param !== null && param !== undefined);
 }
 
-export function filterOnlyExistingParams(ojbParams, currentUser) {
+export function filterOnlyExistingParams(ojbParams, currentObj) {
   let copyObject = {};
   for (let prop in ojbParams) {
     if (
@@ -22,7 +22,7 @@ export function filterOnlyExistingParams(ojbParams, currentUser) {
   }
 
   //we only over write existing values or keep them as them was
-  return { ...currentUser, ...copyObject };
+  return { ...currentObj, ...copyObject };
 }
 
 export function emailToLowerCased(email) {

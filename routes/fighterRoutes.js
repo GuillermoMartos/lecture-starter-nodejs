@@ -54,4 +54,20 @@ router.delete("/:id", tokenValidation, async (req, res, next) => {
   }
 });
 
+router.patch(
+  "/:id",
+  tokenValidation,
+  updateFighterValid,
+  async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const updatedFighter = fighterService.updateFighter(id, req.body);
+      res.body = updatedFighter;
+      return next(res);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
 export { router };
