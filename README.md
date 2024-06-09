@@ -31,5 +31,9 @@ See wich routes are protected and follow instructions for using them.
         POST /api/fighters (PROTECTED)
         PATCH /api/fighters/:id (PROTECTED)
         DELETE /api/fighters/:id (PROTECTED)
+    
+    FIGHT
+        POST /api/fights (PROTECTED)
+        PATCH /api/fights/:id/log (PROTECTED)
 
-PROTECTED ROUTES: to use any of this protected routes, an x-user-id and an x-access-token are requested. Once (registered and) logged, you can find this headers key and values in the response headers. To use the protected keys, copy these headers to your following protected routes requests.
+PROTECTED ROUTES: to use any of this protected routes, an x-user-id and an x-access-token are requested. Once (registered and) logged, you can find this headers key and values in the response headers. To use the protected keys, copy these headers to your following protected routes requests. Each route with no params will respond indicating minimum expected params.
