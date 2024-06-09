@@ -29,6 +29,13 @@ export const MESSAGES = {
     ERROR_POWER_RANGE_VALUE: "Fighter power value must be between 1 to 100.",
     ERROR_HEALTH_RANGE_VALUE: "Fighter health value must be between 80 to 120.",
   },
+  FIGHT_MESSAGES: {
+    ERROR_FIGHT_UPDATE_PARAMS:
+      "Required: id url param and body params fighter1Shot, fighter2Shot, fighter1Health and fighter2Health",
+    ERROR_FIGHT_CREATE_PARAMS: "Required: fighter1 and fighter2.",
+    ERROR_FIGHTER_NOT_FOUND: "Fighter id not found.",
+    ERROR_FIGHT_NOT_FOUND: "Fight id not found.",
+  },
   GENERIC_ERROR_MESSAGE: "Unexpected error. Please, contact or try again",
   GENERIC_EMPTY_REQUEST_ERROR: "Requested data is not found.",
   ERROR_SECURITY_TOKEN_OR_ID_MISSING: "Token or User id missing",
