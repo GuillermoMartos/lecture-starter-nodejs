@@ -15,23 +15,10 @@ class FighterService {
   }
 
   createFighter(data) {
-    let checkedData;
     try {
-      checkedData = this.checkAllData(data);
+      const newFighter = fighterRepository.create({ ...data });
+      return newFighter;
     } catch (error) {
-      //handled by response middleware
-      throw error;
-    }
-
-    try {
-      const newUser = new UserEntity(userRepository.create(checkedData));
-      return newUser.returnUnidentified();
-    } catch (error) {
-      //search and then delete the posible previous created because of unexpected error!
-      const rollbackCreated = this.search({ phoneNumber: data.phoneNumber });
-      if (rollbackCreated) {
-        userRepository.delete(rollbackCreated.id);
-      }
       throw new CustomError(
         MESSAGES.USER_MESSAGES.UNEXPECTED_ERROR_CREATING,
         500

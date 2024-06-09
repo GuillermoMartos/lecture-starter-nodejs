@@ -15,8 +15,32 @@ router.get("/", tokenValidation, async (req, res, next) => {
   return next(res);
 });
 
-router.get("/:id", async (req, res) => {
-  const fighterId = req.params.userId;
+router.get("/:id", tokenValidation, async (req, res, next) => {
+  const id = req.params.id;
+  const requestedFighter = fighterService.searchById({ id });
+  res.body = requestedFighter;
+  return next(res);
 });
+
+router.post(
+  "/",
+  tokenValidation,
+  createFighterValid,
+  async (req, res, next) => {
+    const { name, power, defense, health } = req.body;
+    try {
+      const unidentifiedUserResponse = fighterService.createFighter({
+        name,
+        power,
+        defense,
+        health,
+      });
+      res.body = unidentifiedUserResponse;
+      return next(req.body);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
 
 export { router };
