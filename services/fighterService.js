@@ -3,7 +3,7 @@ import { fighterRepository } from "../repositories/fighterRepository.js";
 class FighterService {
   // TODO: Implement methods to work with fighters
   searchById(id) {
-    const item = fighterRepository.getOne({ id });
+    const item = fighterRepository.getOne(id);
     if (!item) {
       return null;
     }
