@@ -1,3 +1,5 @@
 node_modules
 database.json
 .vscode
+keys
+keys.pub
