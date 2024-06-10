@@ -5,6 +5,7 @@ import {
   updateUserValid,
 } from "../middlewares/user.validation.middleware.js";
 import { tokenValidation } from "../middlewares/auth.tokenValidation.middleware.js";
+import { authService } from "../services/authService.js";
 
 const router = Router();
 
@@ -34,6 +35,9 @@ router.post("/", createUserValid, async (req, res, next) => {
       phoneNumber,
       password,
     });
+    const token = authService.generateToken(unidentifiedUserResponse.id);
+    res.set("x-access-token", token);
+    res.set("x-user-id", unidentifiedUserResponse.id);
     res.body = unidentifiedUserResponse;
     return next(req.body);
   } catch (error) {

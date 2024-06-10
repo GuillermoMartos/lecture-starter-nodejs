@@ -1,8 +1,8 @@
+const apiUrlDeployed = "https://bsa2024-lecturenodejs.onrender.com/api";
+const useProductionDeployedBackend = false;
 let apiUrl = useProductionDeployedBackend
   ? apiUrlDeployed
   : "http://localhost:3333/api";
-const apiUrlDeployed = "https://bsa2024-lecturenodejs.onrender.com/api";
-const useProductionDeployedBackend = false;
 const headersMap = new Map();
 let baseHeaders = { "Content-Type": "application/json" };
 
