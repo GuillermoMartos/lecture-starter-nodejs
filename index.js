@@ -9,7 +9,12 @@ CORS configuration to expose auth tokens used programatically
 (check client/src/services/requestHelper.js) in further requests once they appear
 */
 const corsOptions = {
-  exposedHeaders: ["x-access-token", "x-user-id"],
+  exposedHeaders: [
+    "x-access-token",
+    "x-user-id",
+    "X-Access-Token",
+    "X-User-Id",
+  ],
 };
 
 const app = express();
